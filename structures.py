@@ -1,4 +1,4 @@
-#pertama buat fitur buku yang treakhir di tambahin dulu ya anj
+#pertama buat fitur buku yang treakhir di tambahin dulu ya 
 class StackBuku:
     def __init__(self):
         self.items = []
@@ -18,7 +18,7 @@ class StackBuku:
     def all(self):
         return self.items[::-1]
 
-#nah terus kita buat fitur daftar tunggu ya kmpng, pake queue sama linked list ya anj
+#nah terus kita buat fitur daftar tunggu ya, pake queue sama linked list ya 
 class QueueNode:
     def __init__(self, nama_peminjam):
         self.nama = nama_peminjam
@@ -57,22 +57,27 @@ class QueueAntrean:
             current = current.next
         return daftar
 
+#Implementasi Binary Search Tree (BST)
 class BSTNode:
     def __init__(self, id_buku, judul, pengarang, stok):
         self.id = id_buku
         self.judul = judul
         self.pengarang = pengarang
         self.stok = stok
+        self.tahun = tahun
         self.antrean = QueueAntrean()
         self.left = None
         self.right = None
 
+def __repr__(self):
+    return f"[ID: {self.id} | {self.tahun}] {self.judul} - {self.pengarang} (Stok: {self.stok})"
+    
 class BinarySearchTree:
     def __init__(self):
         self.root = None
 
-    def insert(self, id_buku, judul, pengarang, stok):
-        new_node = BSTNode(id_buku, judul, pengarang, stok)
+    def insert(self, id_buku, judul, pengarang, stok, tahun):
+        new_node = BSTNode(id_buku, judul, pengarang, stok, tahun)
         if self.root is None:
             self.root = new_node
         else:
@@ -111,4 +116,46 @@ class BinarySearchTree:
             books.append(current)
             self._inorder(current.right, books)
 
-def urutkan_buku(
+#Implementasi algoritma sorting (bubble)
+   def urutkan_berdasarkan_abjad(daftar_buku):
+    jumlah_buku = len(daftar_buku)
+    for i in range(jumlah_buku):
+        for j in range(0, jumlah_buku - i - 1):
+            if daftar_buku[j].judul.lower() > daftar_buku[j + 1].judul.lower():
+                temp = daftar_buku[j]
+                daftar_buku[j] = daftar_buku[j + 1]
+                daftar_buku[j + 1] = temp
+                
+    return daftar_buku
+
+   def urutkan_berdasarkan_tahun(daftar_buku):
+    jumlah_buku = len(daftar_buku)
+    for i in range(jumlah_buku):
+        for j in range(0, jumlah_buku - i - 1):
+            # Di sini kuncinya! Kita membandingkan atribut .tahun milik objek buku
+            if daftar_buku[j].tahun > daftar_buku[j + 1].tahun:
+                # Proses tukar posisi pakai temp
+                temp = daftar_buku[j]
+                daftar_buku[j] = daftar_buku[j + 1]
+                daftar_buku[j + 1] = temp
+    return daftar_buku
+
+#implementasi algoritma searching
+   def linear_search_by_title(daftar_buku, kata_kunci):
+       hasil = []
+       for buku in daftar_buku:
+           if kata_kunci.lower() in buku.judul.lower():
+               hasil.append(buku)
+      return hasil
+
+#class untuk data peminjam
+  class Peminjam:
+    def __init__(self, nama, no_telp, alamat, tgl_pinjam, waktu_pinjam):
+        self.nama = nama
+        self.no_telp = no_telp
+        self.alamat = alamat
+        self.tgl_pinjam = tgl_pinjam      # Contoh isi: "28-05-2026"
+        self.waktu_pinjam = waktu_pinjam  # Contoh isi: "14:30"
+        
+    def __repr__(self):
+        return f"{self.nama} ({self.no_telp}) - Tgl: {self.tgl_pinjam} Jam: {self.waktu_pinjam}"

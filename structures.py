@@ -132,9 +132,7 @@ class BinarySearchTree:
     jumlah_buku = len(daftar_buku)
     for i in range(jumlah_buku):
         for j in range(0, jumlah_buku - i - 1):
-            # Di sini kuncinya! Kita membandingkan atribut .tahun milik objek buku
             if daftar_buku[j].tahun > daftar_buku[j + 1].tahun:
-                # Proses tukar posisi pakai temp
                 temp = daftar_buku[j]
                 daftar_buku[j] = daftar_buku[j + 1]
                 daftar_buku[j + 1] = temp
@@ -154,8 +152,8 @@ class BinarySearchTree:
         self.nama = nama
         self.no_telp = no_telp
         self.alamat = alamat
-        self.tgl_pinjam = tgl_pinjam      # Contoh isi: "28-05-2026"
-        self.waktu_pinjam = waktu_pinjam  # Contoh isi: "14:30"
+        self.tgl_pinjam = tgl_pinjam      
+        self.waktu_pinjam = waktu_pinjam  
         
     def __repr__(self):
         return f"{self.nama} ({self.no_telp}) - Tgl: {self.tgl_pinjam} Jam: {self.waktu_pinjam}"

@@ -117,26 +117,26 @@ class BinarySearchTree:
             self._inorder(current.right, books)
 
 #Implementasi algoritma sorting (bubble)
-   def urutkan_berdasarkan_abjad(daftar_buku):
-    jumlah_buku = len(daftar_buku)
-    for i in range(jumlah_buku):
-        for j in range(0, jumlah_buku - i - 1):
-            if daftar_buku[j].judul.lower() > daftar_buku[j + 1].judul.lower():
-                temp = daftar_buku[j]
-                daftar_buku[j] = daftar_buku[j + 1]
-                daftar_buku[j + 1] = temp
+    def urutkan_berdasarkan_abjad(daftar_buku):
+        jumlah_buku = len(daftar_buku)
+        for i in range(jumlah_buku):
+            for j in range(0, jumlah_buku - i - 1):
+                if daftar_buku[j].judul.lower() > daftar_buku[j + 1].judul.lower():
+                   temp = daftar_buku[j]
+                   daftar_buku[j] = daftar_buku[j + 1]
+                   daftar_buku[j + 1] = temp
                 
-    return daftar_buku
+       return daftar_buku
 
    def urutkan_berdasarkan_tahun(daftar_buku):
-    jumlah_buku = len(daftar_buku)
-    for i in range(jumlah_buku):
-        for j in range(0, jumlah_buku - i - 1):
-            if daftar_buku[j].tahun > daftar_buku[j + 1].tahun:
-                temp = daftar_buku[j]
-                daftar_buku[j] = daftar_buku[j + 1]
-                daftar_buku[j + 1] = temp
-    return daftar_buku
+       jumlah_buku = len(daftar_buku)
+       for i in range(jumlah_buku):
+           for j in range(0, jumlah_buku - i - 1):
+               if daftar_buku[j].tahun > daftar_buku[j + 1].tahun:
+                  temp = daftar_buku[j]
+                  daftar_buku[j] = daftar_buku[j + 1]
+                  daftar_buku[j + 1] = temp
+      return daftar_buku
 
 #implementasi algoritma searching
    def linear_search_by_title(daftar_buku, kata_kunci):

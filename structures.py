@@ -5,18 +5,25 @@ class StackBuku:
 
     def push(self, data_buku):
         self.items.append(data_buku)
-    
+
     def pop(self):
         if not self.is_empty():
             return self.items.pop()
-        else:
-            return None
-    
+        return None
+
+    def peek(self):
+        if not self.is_empty():
+            return self.items[-1]
+        return None
+
     def is_empty(self):
         return len(self.items) == 0
-    
-    def all(self):
-        return self.items[::-1]
+
+    def size(self):
+        return len(self.items)
+
+    def get_all(self):
+        return self.items
 
 #nah terus kita buat fitur daftar tunggu ya kmpng, pake queue sama linked list ya anj
 class QueueNode:
@@ -110,5 +117,19 @@ class BinarySearchTree:
             self._inorder(current.left, books)
             books.append(current)
             self._inorder(current.right, books)
+    
+def urutkan_buku_by_judul(list_buku):
+    n = len(list_buku)
+    for i in range(n):
+        for j in range(0, n - i - 1):
+            if list_buku[j].judul.lower() > list_buku[j + 1].judul.lower():
+                list_buku[j], list_buku[j + 1] = list_buku[j + 1], list_buku[j]
+    return list_buku
 
-def urutkan_buku(
+def cari_buku_by_keyword(list_buku, keyword):
+    hasil_pencarian = []
+    keyword_lower = keyword.lower()
+    for buku in list_buku:
+        if keyword_lower in buku.judul.lower() or keyword_lower in buku.pengarang.lower():
+            hasil_pencarian.append(buku)
+    return hasil_pencarian

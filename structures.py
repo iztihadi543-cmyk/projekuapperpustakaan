@@ -1,4 +1,4 @@
-#pertama buat fitur buku yang treakhir di tambahin dulu ya anj
+#pertama buat fitur buku yang treakhir di tambahin dulu ya 
 class StackBuku:
     def __init__(self):
         self.items = []
@@ -25,7 +25,7 @@ class StackBuku:
     def get_all(self):
         return self.items
 
-#nah terus kita buat fitur daftar tunggu ya kmpng, pake queue sama linked list ya anj
+#nah terus kita buat fitur daftar tunggu ya, pake queue sama linked list ya 
 class QueueNode:
     def __init__(self, nama_peminjam):
         self.nama = nama_peminjam
@@ -64,22 +64,27 @@ class QueueAntrean:
             current = current.next
         return daftar
 
+#Implementasi Binary Search Tree (BST)
 class BSTNode:
     def __init__(self, id_buku, judul, pengarang, stok):
         self.id = id_buku
         self.judul = judul
         self.pengarang = pengarang
         self.stok = stok
+        self.tahun = tahun
         self.antrean = QueueAntrean()
         self.left = None
         self.right = None
 
+def __repr__(self):
+    return f"[ID: {self.id} | {self.tahun}] {self.judul} - {self.pengarang} (Stok: {self.stok})"
+    
 class BinarySearchTree:
     def __init__(self):
         self.root = None
 
-    def insert(self, id_buku, judul, pengarang, stok):
-        new_node = BSTNode(id_buku, judul, pengarang, stok)
+    def insert(self, id_buku, judul, pengarang, stok, tahun):
+        new_node = BSTNode(id_buku, judul, pengarang, stok, tahun)
         if self.root is None:
             self.root = new_node
         else:
@@ -117,19 +122,5 @@ class BinarySearchTree:
             self._inorder(current.left, books)
             books.append(current)
             self._inorder(current.right, books)
-    
-def urutkan_buku_by_judul(list_buku):
-    n = len(list_buku)
-    for i in range(n):
-        for j in range(0, n - i - 1):
-            if list_buku[j].judul.lower() > list_buku[j + 1].judul.lower():
-                list_buku[j], list_buku[j + 1] = list_buku[j + 1], list_buku[j]
-    return list_buku
 
-def cari_buku_by_keyword(list_buku, keyword):
-    hasil_pencarian = []
-    keyword_lower = keyword.lower()
-    for buku in list_buku:
-        if keyword_lower in buku.judul.lower() or keyword_lower in buku.pengarang.lower():
-            hasil_pencarian.append(buku)
-    return hasil_pencarian
+def urutkan_buku(

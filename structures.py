@@ -66,7 +66,7 @@ class QueueAntrean:
 
 #Implementasi Binary Search Tree (BST)
 class BSTNode:
-    def __init__(self, id_buku, judul, pengarang, stok):
+    def __init__(self, id_buku, judul, pengarang, stok, tahun):
         self.id = id_buku
         self.judul = judul
         self.pengarang = pengarang
@@ -122,5 +122,3 @@ class BinarySearchTree:
             self._inorder(current.left, books)
             books.append(current)
             self._inorder(current.right, books)
-
-def urutkan_buku(

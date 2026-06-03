@@ -7,14 +7,11 @@ class SistemPerpustakaan:
         self.stack_terbaru = StackBuku()
 
     def tambah_buku_baru(self, id_buku, judul, pengarang, stok, tahun):
-        # Validasi jika ID duplikat di BST
         if self.bst_buku.search(id_buku):
             return False, f"Gagal! Buku dengan ID {id_buku} sudah terdaftar."
         
-        # Simpan ke BST dan dapatkan referensi objek nodenya
         buku_baru = self.bst_buku.insert(id_buku, judul, pengarang, stok, tahun)
         
-        # Push objek tersebut ke Stack Buku Terbaru
         self.stack_terbaru.push(buku_baru)
         return True, f"Buku '{judul}' berhasil ditambahkan ke sistem."
 
@@ -23,7 +20,6 @@ class SistemPerpustakaan:
         if not buku:
             return False, "Buku tidak ditemukan!"
 
-        # Logika Peminjaman & Antrean (Queue)
         if buku.stok > 0:
             buku.stok -= 1
             return True, f"Berhasil! {nama_peminjam} meminjam '{buku.judul}'. Sisa stok: {buku.stok}"
@@ -36,7 +32,6 @@ class SistemPerpustakaan:
         if not buku:
             return False, "Buku tidak ditemukan!"
 
-        # Logika Pengembalian: Cek antrean (Queue) terlebih dahulu
         if not buku.antrean.is_empty():
             peminjam_berikutnya = buku.antrean.dequeue()
             return True, f"Buku '{buku.judul}' dikembalikan. [Antrean Otomatis] Buku langsung dipinjamkan ke: {peminjam_berikutnya}."

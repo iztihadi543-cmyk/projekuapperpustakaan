@@ -76,8 +76,8 @@ class BSTNode:
         self.left = None
         self.right = None
 
-def __repr__(self):
-    return f"[ID: {self.id} | {self.tahun}] {self.judul} - {self.pengarang} (Stok: {self.stok})"
+    def __repr__(self):
+        return f"[ID: {self.id} | {self.tahun}] {self.judul} - {self.pengarang} (Stok: {self.stok})"
     
 class BinarySearchTree:
     def __init__(self):
@@ -89,6 +89,7 @@ class BinarySearchTree:
             self.root = new_node
         else:
             self._insert_rekursif(self.root, new_node)
+        return new_node
 
     def _insert_rekursif(self, current, new_node):
         if new_node.id < current.id:

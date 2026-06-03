@@ -1,79 +1,232 @@
-# gui.py
+import tkinter as tk
+from tkinter import messagebox
 from logic import SistemPerpustakaan
 
-class MenuAplikasi:
-    def __init__(self):
+class AplikasiPerpustakaanGUI:
+
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Sistem Manajemen Perpustakaan")
+        self.root.geometry("700x500")
+
         self.perpus = SistemPerpustakaan()
 
-    def tampilkan_menu(self):
-        # Mengisi data dummy awal untuk mempermudah demonstrasi/pengujian
-        self.perpus.tambah_buku_baru(102, "Struktur Data Python", "Budi", 1, 2023)
+        # DATA CONTOH
         self.perpus.tambah_buku_baru(101, "Algoritma Pemrograman", "Andi", 2, 2022)
+        self.perpus.tambah_buku_baru(102, "Struktur Data Python", "Budi", 1, 2023)
         self.perpus.tambah_buku_baru(103, "Sistem Operasi", "Cici", 0, 2024)
 
-        while True:
-            print("\n================ SYSTEM MANAJEMEN PERPUSTAKAAN ================")
-            print("1. Tambah Buku Baru")
-            print("2. Lihat Semua Koleksi Buku (Urutan ID - BST Inorder)")
-            print("3. Lihat Buku yang Terakhir Ditambahkan (Stack)")
-            print("4. Pinjam Buku / Masuk Daftar Tunggu (Queue)")
-            print("5. Kembalikan Buku")
-            print("6. Keluar")
-            print("===============================================================")
-            
-            pilihan = input("Pilih menu (1-6): ")
+        tk.Label(
+            root,
+            text="SISTEM MANAJEMEN PERPUSTAKAAN",
+            font=("Arial", 16, "bold")
+        ).pack(pady=20)
 
-            if pilihan == "1":
-                try:
-                    id_buku = int(input("Masukkan ID Buku (Angka): "))
-                    judul = input("Masukkan Judul Buku: ")
-                    pengarang = input("Masukkan Pengarang: ")
-                    stok = int(input("Masukkan Jumlah Stok: "))
-                    tahun = int(input("Masukkan Tahun Terbit: "))
-                    
-                    sukses, pesan = self.perpus.tambah_buku_baru(id_buku, judul, pengarang, stok, tahun)
-                    print(f"\n{'✅' if sukses else '❌'} {pesan}")
-                except ValueError:
-                    print("\n❌ Input gagal! ID, Stok, dan Tahun harus berupa angka.")
+        tk.Button(
+            root,
+            text="Tambah Buku Baru",
+            width=40,
+            command=self.tambah_buku
+        ).pack(pady=5)
 
-            elif pilihan == "2":
-                print("\n--- DAFTAR BUKU DI PERPUSTAKAAN ---")
-                buku_list = self.perpus.lihat_semua_buku()
-                if not buku_list:
-                    print("Kosong. Belum ada buku di perpustakaan.")
-                for buku in buku_list:
-                    print(buku)
-                    # Jika ada antrean di buku tersebut, tampilkan jalurnya
-                    if not buku.antrean.is_empty():
-                        print(f"   ↳ ⏳ Daftar Tunggu: {buku.antrean.get_all_antrean()}")
+        tk.Button(
+            root,
+            text="Lihat Semua Koleksi Buku (BST Inorder)",
+            width=40,
+            command=self.lihat_semua_buku
+        ).pack(pady=5)
 
-            elif pilihan == "3":
-                print("\n--- BUKU YANG TERAKHIR DITAMBAHKAN (Stack) ---")
-                riwayat = self.perpus.lihat_riwayat_terbaru()
-                if not riwayat:
-                    print("Belum ada riwayat penambahan buku.")
-                for i, buku in enumerate(riwayat, 1):
-                    print(f"{i}. {buku.judul} (ID: {buku.id})")
+        tk.Button(
+            root,
+            text="Lihat Buku yang Terakhir Ditambahkan (Stack)",
+            width=40,
+            command=self.lihat_riwayat
+        ).pack(pady=5)
 
-            elif pilihan == "4":
-                try:
-                    id_buku = int(input("Masukkan ID Buku yang ingin dipinjam: "))
-                    nama = input("Masukkan Nama Peminjam: ")
-                    sukses, pesan = self.perpus.pinjam_atau_antre(id_buku, nama)
-                    print(f"\n📢 {pesan}")
-                except ValueError:
-                    print("\n❌ ID Buku harus berupa angka.")
+        tk.Button(
+            root,
+            text="Pinjam Buku / Masuk Daftar Tunggu (Queue)",
+            width=40,
+            command=self.pinjam_buku
+        ).pack(pady=5)
 
-            elif pilihan == "5":
-                try:
-                    id_buku = int(input("Masukkan ID Buku yang dikembalikan: "))
-                    sukses, pesan = self.perpus.kembalikan_buku(id_buku)
-                    print(f"\n📢 {pesan}")
-                except ValueError:
-                    print("\n❌ ID Buku harus berupa angka.")
+        tk.Button(
+            root,
+            text="Kembalikan Buku",
+            width=40,
+            command=self.kembalikan_buku
+        ).pack(pady=5)
 
-            elif pilihan == "6":
-                print("\n👋 Keluar dari sistem perpustakaan. Terima kasih!")
-                break
-            else:
-                print("\n❌ Pilihan tidak valid! Silakan masukkan angka 1-6.")
+        tk.Button(
+            root,
+            text="Keluar",
+            width=40,
+            command=self.root.destroy
+        ).pack(pady=20)
+
+    # TAMBAH BUKU
+    def tambah_buku(self):
+        window = tk.Toplevel(self.root)
+        window.title("Tambah Buku Baru")
+        window.geometry("350x250")
+
+        tk.Label(window, text="ID Buku").grid(row=0, column=0, padx=5, pady=5)
+        id_entry = tk.Entry(window)
+        id_entry.grid(row=0, column=1)
+
+        tk.Label(window, text="Judul Buku").grid(row=1, column=0, padx=5, pady=5)
+        judul_entry = tk.Entry(window)
+        judul_entry.grid(row=1, column=1)
+
+        tk.Label(window, text="Pengarang").grid(row=2, column=0, padx=5, pady=5)
+        pengarang_entry = tk.Entry(window)
+        pengarang_entry.grid(row=2, column=1)
+
+        tk.Label(window, text="Stok").grid(row=3, column=0, padx=5, pady=5)
+        stok_entry = tk.Entry(window)
+        stok_entry.grid(row=3, column=1)
+
+        tk.Label(window, text="Tahun Terbit").grid(row=4, column=0, padx=5, pady=5)
+        tahun_entry = tk.Entry(window)
+        tahun_entry.grid(row=4, column=1)
+
+        def simpan():
+            try:
+                sukses, pesan = self.perpus.tambah_buku_baru(
+                    int(id_entry.get()),
+                    judul_entry.get(),
+                    pengarang_entry.get(),
+                    int(stok_entry.get()),
+                    int(tahun_entry.get())
+                )
+
+                if sukses:
+                    messagebox.showinfo("Berhasil", pesan)
+                    window.destroy()
+                else:
+                    messagebox.showerror("Gagal", pesan)
+
+            except ValueError:
+                messagebox.showerror(
+                    "Error",
+                    "ID, Stok, dan Tahun harus berupa angka!"
+                )
+
+        tk.Button(
+            window,
+            text="Simpan",
+            command=simpan
+        ).grid(row=5, columnspan=2, pady=10)
+
+    # LIHAT SEMUA BUKU
+    def lihat_semua_buku(self):
+        daftar = self.perpus.lihat_semua_buku()
+        hasil = ""
+
+        for buku in daftar:
+            hasil += (
+                f"ID Buku    : {buku.id}\n"
+                f"Judul      : {buku.judul}\n"
+                f"Pengarang  : {buku.pengarang}\n"
+                f"Stok       : {buku.stok}\n"
+                f"Tahun      : {buku.tahun}\n"
+            )
+
+            if not buku.antrean.is_empty():
+                hasil += (
+                    f"Daftar Tunggu : "
+                    f"{', '.join(buku.antrean.get_all_antrean())}\n"
+                )
+
+            hasil += "\n----------------------------------\n\n"
+
+        if hasil == "":
+            hasil = "Belum ada buku dalam sistem."
+
+        messagebox.showinfo(
+            "Daftar Koleksi Buku (BST Inorder)",
+            hasil
+        )
+
+    # RIWAYAT STACK
+    def lihat_riwayat(self):
+        data = self.perpus.lihat_riwayat_terbaru()
+
+        if not data:
+            messagebox.showinfo(
+                "Riwayat",
+                "Belum ada buku yang ditambahkan."
+            )
+            return
+
+        hasil = ""
+        for i, buku in enumerate(reversed(data), start=1):
+            hasil += f"{i}. {buku.judul} (ID: {buku.id})\n"
+
+        messagebox.showinfo(
+            "Buku Terakhir Ditambahkan (Stack)",
+            hasil
+        )
+
+    # PINJAM BUKU
+    def pinjam_buku(self):
+        window = tk.Toplevel(self.root)
+        window.title("Pinjam Buku")
+        window.geometry("350x180")
+
+        tk.Label(window, text="ID Buku").grid(row=0, column=0, padx=5, pady=5)
+        id_entry = tk.Entry(window)
+        id_entry.grid(row=0, column=1)
+
+        tk.Label(window, text="Nama Peminjam").grid(row=1, column=0, padx=5, pady=5)
+        nama_entry = tk.Entry(window)
+        nama_entry.grid(row=1, column=1)
+
+        def proses():
+            try:
+                sukses, pesan = self.perpus.pinjam_atau_antre(
+                    int(id_entry.get()),
+                    nama_entry.get()
+                )
+                messagebox.showinfo("Informasi", pesan)
+                window.destroy()
+
+            except ValueError:
+                messagebox.showerror(
+                    "Error",
+                    "ID Buku harus berupa angka."
+                )
+
+        tk.Button(
+            window,
+            text="Proses",
+            command=proses
+        ).grid(row=2, columnspan=2, pady=10)
+
+    # KEMBALIKAN
+    def kembalikan_buku(self):
+        window = tk.Toplevel(self.root)
+        window.title("Kembalikan Buku")
+        window.geometry("300x150")
+
+        tk.Label(window, text="ID Buku").grid(row=0, column=0, padx=5, pady=5)
+        id_entry = tk.Entry(window)
+        id_entry.grid(row=0, column=1)
+
+        def proses():
+            try:
+                sukses, pesan = self.perpus.kembalikan_buku(int(id_entry.get()))
+                messagebox.showinfo("Informasi", pesan)
+                window.destroy()
+
+            except ValueError:
+                messagebox.showerror(
+                    "Error",
+                    "ID Buku harus berupa angka."
+                )
+
+        tk.Button(
+            window,
+            text="Proses",
+            command=proses
+        ).grid(row=1, columnspan=2, pady=10)

@@ -1,4 +1,6 @@
-#pertama buat fitur buku yang treakhir di tambahin dulu ya 
+#pertama buat fitur buku yang treakhir di tambahin dulu ya
+#class (struktur untuk objek)
+
 class StackBuku:
     def __init__(self):
         self.items = []
@@ -31,6 +33,7 @@ class QueueNode:
         self.nama = nama_peminjam
         self.next = None
 
+#Queue (sebagai logika antrean)
 class QueueAntrean:
     def __init__(self):
         self.head = None
